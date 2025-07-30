@@ -6,13 +6,12 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path='.env')
 
-# Загружаем переменные из .env файла
 try:
     with open('.env', 'r', encoding='utf-8-sig') as f:
         for line in f:
             if line.strip() and '=' in line:
                 key, value = line.strip().split('=', 1)
-                key = key.replace('\ufeff', '')  # Убираем BOM
+                key = key.replace('\ufeff', '')
                 os.environ[key] = value
 except Exception as e:
     print(f"Ошибка при загрузке .env: {e}")
