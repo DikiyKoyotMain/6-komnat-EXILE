@@ -6,6 +6,17 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path='.env')
 
+# Загружаем переменные из .env файла
+try:
+    with open('.env', 'r', encoding='utf-8-sig') as f:
+        for line in f:
+            if line.strip() and '=' in line:
+                key, value = line.strip().split('=', 1)
+                key = key.replace('\ufeff', '')  # Убираем BOM
+                os.environ[key] = value
+except Exception as e:
+    print(f"Ошибка при загрузке .env: {e}")
+
 from utils import (
     create_or_get_leader_role, create_or_get_player_role, create_or_get_player_channel, 
     create_temp_call_channel, create_or_get_pistol_role, LEADER_ROLE_NAME, PLAYER_ROLE_NAME,
